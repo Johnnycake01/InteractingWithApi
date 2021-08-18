@@ -29,7 +29,7 @@ class UploadRequestBody(
 
     }
 
-    override fun contentType() = "$contentType/*".toMediaTypeOrNull()
+    override fun contentType() = "$contentType/jpg".toMediaTypeOrNull()
     override fun contentLength() = file.length()
     override fun writeTo(sink: BufferedSink) {
         val length = file.length()

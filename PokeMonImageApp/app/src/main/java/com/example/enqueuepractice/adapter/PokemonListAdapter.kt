@@ -71,6 +71,7 @@ class PokemonListAdapter(private val context:Context):
 
     //function that adds list of pokemon to adapter
     fun additionalListOfPokemon(arrayOfResponse: List<Result>) {
+        listItem.clear()
         listItem.addAll(arrayOfResponse)//add all element
         notifyDataSetChanged()//notify adapter of any changes either adding or substracting from the list
     }

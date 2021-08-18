@@ -20,30 +20,28 @@
             android:layout_height="wrap_content">
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvPokemon"
-        android:layout_width="0dp"
-        android:layout_height="300dp"
-        android:layout_margin="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:cardCornerRadius="160dp"
-        android:background="@color/p"
-        >
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/view_pager_layout"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+            </androidx.viewpager2.widget.ViewPager2>
         <ImageView
             android:id="@+id/ivPokemon"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
             />
-    </androidx.cardview.widget.CardView>
+
     <LinearLayout
         android:id="@+id/loName"
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/cvPokemon"
+        app:layout_constraintTop_toBottomOf="@id/view_pager_layout"
         android:orientation="vertical"
         >
         <TextView

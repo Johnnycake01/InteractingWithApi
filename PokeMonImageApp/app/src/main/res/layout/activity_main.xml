@@ -17,12 +17,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
+    <LinearLayout
+        android:id="@+id/laLimitBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+        <EditText
+            android:id="@+id/edBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="65"
+            android:maxLength="4"
+            android:hint="@string/type_limit"
+            android:inputType="number"
+            />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/ckButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/check"
+            android:layout_weight="15"
+            />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/logo"
+        app:layout_constraintTop_toBottomOf="@id/laLimitBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />
@@ -31,11 +56,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:text="Network failure click reload button to reload"
+        android:text="@string/network_failure_message"
         app:layout_constraintBottom_toTopOf="@id/btReload"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:padding="10dp"
+        android:layout_margin="10dp"
         />
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btReload"

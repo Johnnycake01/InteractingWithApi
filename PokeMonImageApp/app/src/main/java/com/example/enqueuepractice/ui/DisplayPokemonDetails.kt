@@ -9,9 +9,12 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.enqueuepractice.R
+import com.example.enqueuepractice.adapter.PokemonListAdapter
+import com.example.enqueuepractice.adapter.ViewPagerClass
 import com.example.enqueuepractice.model.Characteristics
 import com.example.enqueuepractice.services.PokeApi
 import retrofit2.Call
@@ -32,6 +35,8 @@ class  DisplayPokemonDetails : AppCompatActivity() {
     private lateinit var num:String
     private lateinit var onError:LinearLayout
     private lateinit var reloadButton2: AppCompatButton
+    private lateinit var view:ViewPager2
+    private lateinit var adapter: ViewPagerClass
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +50,48 @@ class  DisplayPokemonDetails : AppCompatActivity() {
         species = findViewById(R.id.tvSpecies)
         onError = findViewById(R.id.loError)
         reloadButton2 = findViewById(R.id.btReload2)
+
+
+        //call the adapter class and pass in the two list and asign value to list
+        adapter = ViewPagerClass( this)
+         view =
+            findViewById(R.id.view_pager_layout)//get view layout or container through its id
+        view.adapter = adapter
+
+        //<view pager anime effect>
+
+        /**
+         * set animation for view pager  image slide
+         * */
+        view.clipToPadding = false
+        view.clipChildren = false
+        view.offscreenPageLimit = 1
+
+        // Add a PageTransformer that translates the next and previous items horizontally
+        // towards the center of the screen, which makes them visible
+        val nextItemVisiblePx =
+            resources.getDimension(R.dimen.viewpager_next_item_visible)       //visible section of next item in viewpager2
+        val currentItemHorizontalMarginPx =
+            resources.getDimension(R.dimen.viewpager_current_item_horizontal_margin)            //margin between item and next item
+        val pageTranslationX = nextItemVisiblePx + currentItemHorizontalMarginPx
+
+        view.setPageTransformer { page: View, position: Float ->
+            page.translationX = -pageTranslationX * position
+            // this line scales the item's height
+            page.scaleY = 1 - (0.25f * Math.abs(position))
+
+            //fading effect
+            page.alpha = 0.25f + (1 - Math.abs(position))
+        }
+
+        val itemDecoration = HorizontalMaginDecorationForViewPager(
+            this,
+            R.dimen.viewpager_current_item_horizontal_margin
+        )
+        view.addItemDecoration(itemDecoration)
+
+
+
 
 
         //get values from intent
@@ -115,6 +162,17 @@ class  DisplayPokemonDetails : AppCompatActivity() {
                     //get stat of pokemon
                     stats.text = stat
                     species.text = responseBody.species.name
+                    //get each item list of images
+                    val arrayOfResponse = listOf(responseBody.sprites.back_default,
+                        responseBody.sprites.back_female,
+                        responseBody.sprites.back_shiny,
+                        responseBody.sprites.back_shiny_female,
+                        responseBody.sprites.front_default,
+                        responseBody.sprites.front_female,
+                        responseBody.sprites.front_shiny,
+                        responseBody.sprites.front_shiny_female,
+                    )
+                    adapter.additionalListOfPokemon(arrayOfResponse)
                 }
 
             }

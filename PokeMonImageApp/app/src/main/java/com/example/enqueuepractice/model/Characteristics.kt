@@ -6,7 +6,8 @@ data class Characteristics(
     val moves:List<Move>,
     val name:String,
     val stats:List<Stat>,
-    val species:Species
+    val species:Species,
+    val sprites:Sprite
         )
 
 

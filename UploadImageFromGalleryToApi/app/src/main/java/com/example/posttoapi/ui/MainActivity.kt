@@ -6,7 +6,8 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -28,7 +29,7 @@ import retrofit2.Response
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
-const val TAG = "mainActivity"
+
 const val READ_GALLERY = 1
 const val BASE_URL = "https://darot-image-upload-service.herokuapp.com/api/v1/"
 class MainActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
@@ -41,11 +42,18 @@ class MainActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
     private var imageUri:Uri? = null
     private lateinit var main:ConstraintLayout
     private lateinit var progressBar: ProgressBar
+    private lateinit var statusLabel:TextView
+    private lateinit var messageLabel:TextView
+    private lateinit var downloadLabel:TextView
+    private lateinit var status:Button
+    private lateinit var message4:Button
+    private lateinit var download:Button
+    private lateinit var reloadButton: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         //assign variables to views and instantiate other variable
         selectButton = findViewById(R.id.selectImage)
         message = findViewById(R.id.messageBox)
@@ -53,11 +61,27 @@ class MainActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
         uploadImage = findViewById(R.id.uploadImageButton)
         main = findViewById(R.id.main)
         progressBar = findViewById(R.id.progress_bar)
+        statusLabel = findViewById(R.id.status)
+        messageLabel = findViewById(R.id.message)
+        downloadLabel = findViewById(R.id.download)
+        status = findViewById(R.id.statuslabel)
+        message4 = findViewById(R.id.messagelabel)
+        download = findViewById(R.id.downloadlabel)
+        reloadButton = findViewById(R.id.buttonReload)
 
+      hideViews()
+       readStorage()
+
+        reloadButton.setOnClickListener {
+            hideViews()
+            readStorage()
+            reloadButton.visibility = View.GONE
+            message.visibility = View.GONE
+        }
 
         //button to select image from gallery
         selectButton.setOnClickListener {
-            readStorage()
+            uploadImage()
         }
         //upload image to server on button clicked
         uploadImage.setOnClickListener {
@@ -69,6 +93,32 @@ class MainActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
         }
 
     }
+
+    private fun hideViews() {
+        imageView.visibility = View.GONE
+        uploadImage.visibility =View.GONE
+        progressBar.visibility = View.GONE
+        statusLabel.visibility = View.GONE
+        messageLabel.visibility = View.GONE
+        downloadLabel.visibility =View.GONE
+        selectButton.visibility = View.GONE
+        status.visibility = View.GONE
+        message4.visibility = View.GONE
+        download.visibility = View.GONE
+    }
+    private fun showViews() {
+        imageView.visibility = View.VISIBLE
+        uploadImage.visibility = View.VISIBLE
+        progressBar.visibility =  View.VISIBLE
+        statusLabel.visibility =  View.VISIBLE
+        messageLabel.visibility =  View.VISIBLE
+        downloadLabel.visibility = View.VISIBLE
+        selectButton.visibility =  View.VISIBLE
+        status.visibility =  View.VISIBLE
+        message4.visibility =  View.VISIBLE
+        download.visibility =  View.VISIBLE
+    }
+
 
     //function to upload image to api
     private fun sendImageToApi() {
@@ -86,15 +136,22 @@ class MainActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
         progressBar.progress = 0
         val body = UploadRequestBody(file, "image", this)
         ApiPostMethod().postImage(
-            MultipartBody.Part.createFormData("image", file.name, body),
+            MultipartBody.Part.createFormData("file", file.name, body),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), "json")
         ).enqueue(object : retrofit2.Callback<ImageUploadResponse> {
             override fun onResponse(
                 call: Call<ImageUploadResponse>,
                 response: Response<ImageUploadResponse>
             ) {
+                val responseBody = response.body()
                 progressBar.progress = 100
-                main.snackbar("upload successful")
+
+                if (responseBody != null){
+                    statusLabel.text = responseBody.status.toString()
+                    messageLabel.text = responseBody.message
+                    downloadLabel.text = responseBody.payload.downloadUri
+                }
+
             }
 
             override fun onFailure(call: Call<ImageUploadResponse>, t: Throwable) {
@@ -138,7 +195,7 @@ class MainActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
 
         } else {
 
-            uploadImage()
+            showViews()
 
 
         }
@@ -153,9 +210,10 @@ class MainActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == READ_GALLERY){
             if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                uploadImage()
+                showViews()
             }else{
-               message.text
+               message.visibility = View.VISIBLE
+                reloadButton.visibility = View.VISIBLE
 
             }
         }

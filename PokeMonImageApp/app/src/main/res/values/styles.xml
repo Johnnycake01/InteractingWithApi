@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="cardSmallText">
+        <item name="android:fontFamily">@font/dancing_script_bold</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+    <style name="contactNamesStyle">
+        <item name="android:fontFamily">@font/stix_two_text_medium_italic</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineSpacingExtra">5dp</item>
+    </style>
+</resources>

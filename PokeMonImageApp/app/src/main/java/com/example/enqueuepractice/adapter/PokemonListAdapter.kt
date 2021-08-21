@@ -56,7 +56,7 @@ class PokemonListAdapter(private val context:Context):
         //set onclick listener to each views
         holder.itemView.setOnClickListener {
             val intent = Intent(context, DisplayPokemonDetails::class.java)
-            intent.putExtra("positionAdapter", name )
+            intent.putExtra("positionName", name )
             intent.putExtra("position",position.toString())
             context.startActivity(intent)
         }

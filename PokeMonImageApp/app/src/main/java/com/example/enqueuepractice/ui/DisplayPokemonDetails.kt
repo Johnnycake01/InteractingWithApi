@@ -25,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class  DisplayPokemonDetails : AppCompatActivity() {
     //declaration of variable
-    private lateinit var position:String
+    private lateinit var nameFromIntent:String
     private lateinit var img:ImageView
     private lateinit var nameField:TextView
     private lateinit var ability:TextView
@@ -42,7 +42,7 @@ class  DisplayPokemonDetails : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display_pokemon_details)
         //assign variables to views and instantiate other variable
-        img = findViewById(R.id.ivPokemon)
+        img = findViewById(R.id.fullImage)
         nameField = findViewById(R.id.tvPokeName)
         ability = findViewById(R.id.tvPokeAbility)
         moves = findViewById(R.id.tvMoves)
@@ -94,8 +94,9 @@ class  DisplayPokemonDetails : AppCompatActivity() {
 
 
 
+
         //get values from intent
-        position = intent.getStringExtra("positionAdapter")!!
+        nameFromIntent = intent.getStringExtra("positionName")!!
         num = intent.getStringExtra("position")!!
 
         //function call to get image from server
@@ -114,7 +115,7 @@ class  DisplayPokemonDetails : AppCompatActivity() {
     //function to get image from server
     private fun getImage() {
         Glide.with(this)
-            .load("https://img.pokemondb.net/artwork/large/$position.jpg")
+            .load("https://img.pokemondb.net/artwork/large/$nameFromIntent.jpg")
             .circleCrop()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(img)

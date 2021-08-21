@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 
         checkButton.setOnClickListener {
 
-            if (editBox.text != null){
+            if (editBox.text.isNotBlank()){
                 limit = editBox.text.toString().toInt()
             }
             Log.d(TAG,"button clicked limit =$limit and offset= $offset")

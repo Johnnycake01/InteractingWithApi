@@ -13,10 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="@drawable/logo_pokemon"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNetworkError" />
     <LinearLayout
         android:id="@+id/laLimitBox"
         android:layout_width="match_parent"
@@ -43,39 +42,51 @@
             />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/laLimitBox"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/laLimitBox">
+
+        <ProgressBar
+            android:id="@+id/progressing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/laLimitBox" />
+    </FrameLayout>
+
+    <View
+        android:id="@+id/networkFailedIcon"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="@drawable/img_305394"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvNetworkError"
+        app:layout_constraintTop_toTopOf="@id/tvNetworkError"
+        app:layout_constraintBottom_toBottomOf="@id/tvNetworkError"/>
+
     <TextView
         android:id="@+id/tvNetworkError"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:padding="5dp"
         android:text="@string/network_failure_message"
-        app:layout_constraintBottom_toTopOf="@id/btReload"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toStartOf="@+id/networkFailedIcon"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        android:padding="10dp"
-        android:layout_margin="10dp"
-        />
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btReload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvNetworkError"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="Reload"
-        android:textAllCaps="false"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

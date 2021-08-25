@@ -6,106 +6,113 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.enqueuepractice.adapter.PokemonListAdapter
 import com.example.enqueuepractice.R
-import com.example.enqueuepractice.services.PokeApi
-import com.example.enqueuepractice.model.PokemonRequest
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import kotlin.properties.Delegates
+import com.example.enqueuepractice.connectivity.ConnectivityLiveData
+import com.example.enqueuepractice.utility.TAG
 
 
-const val BASE_URL = "https://pokeapi.co/api/v2/"
-const val TAG = "mainActivity"
 class MainActivity : AppCompatActivity() {
     //declaration of variable
     private lateinit var rv: RecyclerView
     private lateinit var rvAdapter: PokemonListAdapter
-    private var offset by Delegates.notNull<Int>()
+    private var offset = 0
     private lateinit var errorText: TextView
     private lateinit var reloadButton: AppCompatButton
     private lateinit var checkButton: AppCompatButton
     private lateinit var editBox:EditText
     private var limit = 500
+    private lateinit var connectivityLiveData: ConnectivityLiveData
+    private lateinit var progress:ProgressBar
+    private lateinit var errorIcon:View
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Log.d(TAG,"oncreate")
+
+        connectivityLiveData = ConnectivityLiveData(application)
         //assign variables to views and instantiate other variable
+        observeFromLiveData(limit,offset)//function call to get image from api
+
         editBox = findViewById(R.id.edBox)
         checkButton =findViewById(R.id.ckButton)
         rv = findViewById(R.id.recyclerView)
         errorText = findViewById(R.id.tvNetworkError)
-        reloadButton = findViewById(R.id.btReload)
+        progress = findViewById(R.id.progressing)
+        errorIcon = findViewById(R.id.networkFailedIcon)
+
+
+
         rvAdapter = PokemonListAdapter(this)
-        offset = 0
-        Log.d(TAG,"defalut limit =$limit and offset= $offset")
+
+
         //adapter setting
         rv.adapter = rvAdapter
         rv.setHasFixedSize(true)
         rv.layoutManager = GridLayoutManager(this, 3)
 
-        //onclick of reload button
-        reloadButton.setOnClickListener {
+        connectivityLiveData.observe(this, Observer { isAvailable ->
+            //2
+            when (isAvailable) {
+                true -> {
+                    errorIcon.visibility = View.GONE
+                    errorText.visibility = View.GONE
 
-            fetchPokemonData(limit,offset)
-            reloadButton.visibility = View.GONE
-            errorText.visibility = View.GONE
-        }
+                   // progressImage.visibility = View.GONE
+                    observeFromLiveData(limit,offset)//function call to get image from api
+                }
+                false -> {
+                    progress.visibility = View.GONE
+                }
+            }
+        })
+
+
+
 
         checkButton.setOnClickListener {
 
             if (editBox.text.isNotBlank()){
                 limit = editBox.text.toString().toInt()
             }
-            Log.d(TAG,"button clicked limit =$limit and offset= $offset")
-            fetchPokemonData(limit, offset)
+
+            observeFromLiveData(limit, offset)
 
         }
-
-        fetchPokemonData(limit,offset)//function call to get image from api
-
     }
 
     //function to get image from api
-    private fun fetchPokemonData(limited:Int, offset: Int) {
+  private  fun observeFromLiveData(limit:Int,offset:Int){
+      val instanceOfRetrofitViewModelBuilder = ViewModelProvider(this)[RetrofitViewModelBuilder::class.java]
+        instanceOfRetrofitViewModelBuilder.fetchPokemonData(limit,offset)
+        instanceOfRetrofitViewModelBuilder.instanceOfMutableLiveData.observe(this){
+            if (it != null){
+                //get list of result
+                val arrayOfResponse = it.results
+                //assign list of result to adapter of recycler view to enable adapter
+                // display each information on appropriate view
+                rvAdapter.additionalListOfPokemon(arrayOfResponse)
+                progress.visibility = View.GONE
 
-        val pokeApi = PokeApi.RetrofitBuild()
-        val pokemonRequestCall = pokeApi.getPokemon(limited, offset)
-
-        pokemonRequestCall.enqueue(object : Callback<PokemonRequest> {
-            override fun onResponse( //on successful network call
-                call: Call<PokemonRequest>,
-                response: Response<PokemonRequest>
-            ) {
-                val responseBody = response.body()
-                //assert responseBody not null
-                if (responseBody != null) {
-
-                    //get list of result
-                    val arrayOfResponse = responseBody.results
-
-                    //assign list of result to adapter of recycler view to enable adapter
-                    // display each information on appropriate view
-                    rvAdapter.additionalListOfPokemon(arrayOfResponse)
-                }
-            }
-
-            //on failure
-            override fun onFailure(call: Call<PokemonRequest>, t: Throwable) {
-                //on failure display error message
-                reloadButton.visibility = View.VISIBLE
+            }else{
+                progress.visibility = View.GONE
+                errorIcon.visibility = View.VISIBLE
                 errorText.visibility = View.VISIBLE
-            }
 
-        })
-    }
+            }
+        }
+
+  }
+
 
 
 }

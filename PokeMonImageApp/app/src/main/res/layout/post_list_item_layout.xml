@@ -13,11 +13,27 @@
             android:layout_height="match_parent"
             android:background="@color/p"
             >
+            <FrameLayout
+                android:id="@+id/frame"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                app:layout_constraintBottom_toTopOf="@id/titleText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
+
+
+            <ProgressBar
+                android:id="@+id/progressingImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                />
             <ImageView
                 android:id="@+id/Images"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
                 android:layout_gravity="center"
 
                 android:textAppearance="@style/contactNamesStyle"
@@ -25,6 +41,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+            </FrameLayout>
 
 
             <TextView
@@ -36,7 +53,7 @@
                 android:text="Oyesina Johnson"
                 android:textAppearance="@style/contactNamesStyle"
                 app:layout_constraintEnd_toEndOf="parent"
-               app:layout_constraintTop_toBottomOf="@id/Images"
+               app:layout_constraintTop_toBottomOf="@id/frame"
                 app:layout_constraintBottom_toBottomOf="parent"
 
                 app:layout_constraintStart_toStartOf="parent" />

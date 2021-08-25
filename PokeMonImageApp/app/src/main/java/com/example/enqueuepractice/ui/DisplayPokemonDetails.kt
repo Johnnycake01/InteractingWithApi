@@ -1,27 +1,21 @@
 package com.example.enqueuepractice.ui
 
-import android.content.Intent
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.enqueuepractice.R
-import com.example.enqueuepractice.adapter.PokemonListAdapter
 import com.example.enqueuepractice.adapter.ViewPagerClass
-import com.example.enqueuepractice.model.Characteristics
-import com.example.enqueuepractice.services.PokeApi
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.example.enqueuepractice.connectivity.ConnectivityLiveData
+
 
 class  DisplayPokemonDetails : AppCompatActivity() {
     //declaration of variable
@@ -37,6 +31,7 @@ class  DisplayPokemonDetails : AppCompatActivity() {
     private lateinit var reloadButton2: AppCompatButton
     private lateinit var view:ViewPager2
     private lateinit var adapter: ViewPagerClass
+    private lateinit var connectivityLiveData: ConnectivityLiveData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +45,7 @@ class  DisplayPokemonDetails : AppCompatActivity() {
         species = findViewById(R.id.tvSpecies)
         onError = findViewById(R.id.loError)
         reloadButton2 = findViewById(R.id.btReload2)
+        connectivityLiveData = ConnectivityLiveData(application)
 
 
         //call the adapter class and pass in the two list and asign value to list
@@ -98,16 +94,27 @@ class  DisplayPokemonDetails : AppCompatActivity() {
         //get values from intent
         nameFromIntent = intent.getStringExtra("positionName")!!
         num = intent.getStringExtra("position")!!
+        connectivityLiveData.observe(this,{ isAvailable ->
+            //2
+            when (isAvailable) {
+                true -> {
+                    //function call to get image from server
+                    getImage()
 
-        //function call to get image from server
-        getImage()
+                    //function call to get details of pokemon from api
+                    fetchCharacterData(num)
 
-        //function call to get details of pokemon from api
-        fetchCharacterData()
+                }
+                false -> {
+
+                }
+            }
+        })
+
 
         reloadButton2.setOnClickListener {
             getImage()
-         fetchCharacterData()
+         fetchCharacterData(num)
             onError.visibility = View.GONE
         }
     }
@@ -122,68 +129,55 @@ class  DisplayPokemonDetails : AppCompatActivity() {
     }
 
     //function to fetch character details from api
-    private fun fetchCharacterData() {
-       val pokeApi = PokeApi.RetrofitBuild()
+    private fun fetchCharacterData(num:String) {
+        val instanceOfRetrofitViewModelBuilderChar = ViewModelProvider(this)[RetrofitViewModelBuilder::class.java]
+        instanceOfRetrofitViewModelBuilderChar.fetchPokemonDataChar("pokemon/${num.toInt() + 1}/")
         //dynamically change url link to server
-        val callReference = pokeApi.getPokemonChar("pokemon/${num.toInt() + 1}/")
-        callReference.enqueue(object: Callback<Characteristics> {
-            override fun onResponse(//on succesful connection to server
-                call: Call<Characteristics>,
-                response: Response<Characteristics>
-            ) {
-                val responseBody = response.body()
-                if (responseBody != null){
-                    //get name of pokemon
-                nameField.text = responseBody.name
-                    var string = ""
-                    responseBody.abilities.indices.forEach { i ->
-                        string += responseBody.abilities[i].ability.name
-                        if (i < responseBody.abilities.size-1){
-                            string += " ,  "
-                        }
+        instanceOfRetrofitViewModelBuilderChar.instanceOfMutableLiveDataChar.observe(this){
+            if (it != null){
+                //get list of result
+                nameField.text = it.name
+                var string = ""
+                it.abilities.indices.forEach { i ->
+                    string += it.abilities[i].ability.name
+                    if (i < it.abilities.size-1){
+                        string += " ,  "
                     }
-                    //get abilities of pokemon
-                    ability.text = string
-                    var move = ""
-                    for(i in responseBody.moves.indices){
-                        move += responseBody.moves[i].move.name
-                        if (i < responseBody.moves.size-1){
-                            move += " ,  "
-                        }
-                    }
-                    //get moves of pokemon
-                    moves.text = move
-                    var stat = ""
-                    for(i in responseBody.stats.indices){
-                        stat += responseBody.stats[i].stat.name
-                        if (i < responseBody.stats.size-1){
-                            stat += " ,  "
-                        }
-                    }
-                    //get stat of pokemon
-                    stats.text = stat
-                    species.text = responseBody.species.name
-                    //get each item list of images
-                    val arrayOfResponse = listOf(responseBody.sprites.back_default,
-                        responseBody.sprites.back_female,
-                        responseBody.sprites.back_shiny,
-                        responseBody.sprites.back_shiny_female,
-                        responseBody.sprites.front_default,
-                        responseBody.sprites.front_female,
-                        responseBody.sprites.front_shiny,
-                        responseBody.sprites.front_shiny_female,
-                    )
-                    adapter.additionalListOfPokemon(arrayOfResponse)
                 }
-
+                //get abilities of pokemon
+                ability.text = string
+                var move = ""
+                for(i in it.moves.indices){
+                    move += it.moves[i].move.name
+                    if (i < it.moves.size-1){
+                        move += " ,  "
+                    }
+                }
+                //get moves of pokemon
+                moves.text = move
+                var stat = ""
+                for(i in it.stats.indices){
+                    stat += it.stats[i].stat.name
+                    if (i < it.stats.size-1){
+                        stat += " ,  "
+                    }
+                }
+                //get stat of pokemon
+                stats.text = stat
+                species.text = it.species.name
+                //get each item list of images
+                val arrayOfResponse = listOf(it.sprites.back_default,
+                    it.sprites.back_female,
+                    it.sprites.back_shiny,
+                    it.sprites.back_shiny_female,
+                    it.sprites.front_default,
+                    it.sprites.front_female,
+                    it.sprites.front_shiny,
+                    it.sprites.front_shiny_female,
+                )
+                adapter.additionalListOfPokemon(arrayOfResponse)
             }
-
-            override fun onFailure(call: Call<Characteristics>, t: Throwable) {
-                onError.visibility = View.VISIBLE //on failure display error message
-            }
-
-
-        })
+        }
     }
 }
 

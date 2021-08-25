@@ -2,29 +2,34 @@ package com.example.enqueuepractice.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.enqueuepractice.R
-import com.example.enqueuepractice.`object`.FunctionAndValidation
+import com.example.enqueuepractice.objects.FunctionAndValidation
 import com.example.enqueuepractice.model.Result
 import com.example.enqueuepractice.ui.DisplayPokemonDetails
+import java.util.logging.Handler
 
 
 class PokemonListAdapter(private val context:Context):
     RecyclerView.Adapter<PokemonListAdapter.ContactHolder>(){
     private val listItem:ArrayList<Result> = ArrayList()
+//    val progressImage:ProgressBar = findViewById(R.id.progressingImage)
 
 
     //inner class of recycler view that extends View holder
     inner class ContactHolder(contactView: View):RecyclerView.ViewHolder(contactView){
        val postId:ImageView = contactView.findViewById(R.id.Images)
         val postTitle:TextView = contactView.findViewById(R.id.titleText)
+        //val progressImage:ProgressBar = contactView.findViewById(R.id.progressingImage)
     }
 
     //on create of view holder the recyler view adapter should inflate the view layout
@@ -60,7 +65,9 @@ class PokemonListAdapter(private val context:Context):
             intent.putExtra("position",position.toString())
             context.startActivity(intent)
         }
-
+    }
+    fun removeProgressBar(view:View){
+        view.visibility = View.GONE
 
     }
 

@@ -2,5 +2,5 @@
     <string name="app_name">PokeApp</string>
     <string name="check">check</string>
     <string name="type_limit">type limit</string>
-    <string name="network_failure_message">Network failure, ensure you are connected to the internet then click reload button to reload</string>
+    <string name="network_failure_message">you are offline, page will reload when online</string>
 </resources>

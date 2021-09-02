@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="postTextStyle">
+        <item name="android:fontFamily">@font/notosansjp_bold</item>
+        <item name="android:textSize">18sp</item>
+
+    </style>
+
+    <style name="postTitleStyle">
+        <item name="android:fontFamily">@font/notosansjp_bold</item>
+        <item name="android:textSize">18sp</item>
+
+
+    </style>
+
+    <style name="postBodyStyle">
+        <item name="android:fontFamily">@font/ibm_plex_sans_arabic_bold</item>
+        <item name="android:textSize">16sp</item>
+
+    </style>
+</resources>

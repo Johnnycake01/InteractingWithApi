@@ -157,7 +157,7 @@ class  DisplayPokemonDetails : AppCompatActivity() {
                 moves.text = move
                 var stat = ""
                 for(i in it.stats.indices){
-                    stat += it.stats[i].stat.name
+                    stat += "${ it.stats[i].stat.name } with Stat Id : ${it.stats[i].base_stat}"
                     if (i < it.stats.size-1){
                         stat += " ,  "
                     }

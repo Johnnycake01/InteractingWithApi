@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".mvvm.ui.mvvm.MvvmCommentOnPost"
+    android:background="@color/purple_200"
+    >
+    <TextView
+        android:id="@+id/mvvmUserPostTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_margin="10dp"
+        android:text="@string/titleText"
+        android:textAppearance="@style/postTitleStyle"
+        app:layout_constraintBottom_toTopOf="@id/mvvmUserPostBody"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/mvvmUserPostBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_margin="10dp"
+        android:text="@string/textBody"
+        android:textAppearance="@style/postBodyStyle"
+        app:layout_constraintEnd_toEndOf="@id/mvvmUserPostTitle"
+        app:layout_constraintStart_toStartOf="@id/mvvmUserPostTitle"
+        app:layout_constraintTop_toBottomOf="@id/mvvmUserPostTitle"
+        app:layout_constraintBottom_toTopOf="@id/mvvmAllCommentsToggle"
+        />
+
+    <TextView
+        android:id="@+id/mvvmAllCommentsCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textColor="#2961F3"
+        app:layout_constraintTop_toTopOf="@id/mvvmAllCommentsToggle"
+        app:layout_constraintBottom_toBottomOf="@id/mvvmAllCommentsToggle"
+        app:layout_constraintEnd_toStartOf="@id/mvvmAllCommentsToggle"
+        />
+
+    <TextView
+        android:id="@+id/mvvmAllCommentsToggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/comments"
+        android:textColor="#2961F3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mvvmUserPostBody"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mvvmRvComments"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/mvvmComment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mvvmAllCommentsToggle" />
+    <EditText
+        android:id="@+id/mvvmComment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/mvvmPost"
+
+        />
+    <Button
+        android:id="@+id/mvvmPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="post"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/mvvmComment"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

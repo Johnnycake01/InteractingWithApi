@@ -72,6 +72,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 false -> {
                     progress.visibility = View.GONE
+                    errorIcon.visibility = View.VISIBLE
+                    errorText.visibility = View.VISIBLE
                 }
             }
         })

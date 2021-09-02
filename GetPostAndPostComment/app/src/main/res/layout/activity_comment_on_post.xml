@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".mvc.ui.mvc.CommentOnPost"
+    android:background="@color/backgroundForApp"
+    >
+    <LinearLayout
+        android:id="@+id/ErrorCommentOnPost"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/userPostTitle"
+        android:background="@color/white"
+        android:weightSum="100"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginStart="10dp"
+            android:text="your Internet connection is down"
+            android:layout_weight="90"
+            />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="5"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/img_305394"
+            />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/userPostTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_margin="10dp"
+        android:text="@string/titleText"
+        android:textAppearance="@style/postTitleStyle"
+        app:layout_constraintBottom_toTopOf="@id/userPostBody"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ErrorCommentOnPost"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/userPostBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_margin="10dp"
+        android:text="@string/textBody"
+        android:textAppearance="@style/postBodyStyle"
+        app:layout_constraintEnd_toEndOf="@id/userPostTitle"
+        app:layout_constraintStart_toStartOf="@id/userPostTitle"
+        app:layout_constraintTop_toBottomOf="@id/userPostTitle"
+        app:layout_constraintBottom_toTopOf="@id/allCommentsToggle"
+        />
+
+    <TextView
+        android:id="@+id/allCommentsCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textColor="#2961F3"
+        app:layout_constraintTop_toTopOf="@id/allCommentsToggle"
+        app:layout_constraintBottom_toBottomOf="@id/allCommentsToggle"
+        app:layout_constraintEnd_toStartOf="@id/allCommentsToggle"
+        />
+
+    <TextView
+        android:id="@+id/allCommentsToggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/comments"
+        android:textColor="#2961F3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userPostBody"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvComments"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/comment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/allCommentsToggle" />
+    <EditText
+        android:id="@+id/comment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/post"
+
+        />
+    <Button
+        android:id="@+id/post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="post"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/comment"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

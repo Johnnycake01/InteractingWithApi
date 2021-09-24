@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.listofposts.ShowList"
+    android:background="@color/customAsh"
+    >
+    <androidx.appcompat.widget.Toolbar
+     android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:title=" "
+        >
+        <View
+            android:id="@+id/socializeLogo"
+            android:layout_width="200dp"
+            android:layout_height="110dp"
+            android:layout_gravity="start"
+            android:background="@drawable/socialize_logo"
+            />
+    </androidx.appcompat.widget.Toolbar>
+
+
+
+
+    <LinearLayout
+        android:background="@color/white"
+        android:id="@+id/addPost"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        >
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/rvUserImageCard"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="100dp"
+            app:cardPreventCornerOverlap="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            >
+
+            <ImageView
+                android:id="@+id/rvUserImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop" />
+        </androidx.cardview.widget.CardView>
+        <EditText
+            android:id="@+id/editTextNewPost"
+            android:background="@drawable/edit_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:clickable="true"
+            android:gravity="top"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:hint="add new post"
+            />
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvListOfPost"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addPost"
+        tools:listitem="@layout/list_of_posts_layout_view" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/showList">
+
+    <fragment
+        android:id="@+id/showList"
+        android:name="com.example.dependencyinjection.ui.listofposts.ShowList"
+        android:label="fragment_show_list"
+        tools:layout="@layout/fragment_show_list" >
+        <action
+            android:id="@+id/action_showList_to_addNewCommentBlankFragment"
+            app:destination="@id/addNewCommentBlankFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:exitAnim="@anim/slide_out_down" />
+        <action
+            android:id="@+id/action_showList_to_addNewPostFragment"
+            app:destination="@id/addNewPostFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/addNewCommentBlankFragment"
+        android:name="com.example.dependencyinjection.ui.addcommentfragment.AddNewCommentBlankFragment"
+        android:label="fragment_add_new_comment_blank"
+        tools:layout="@layout/fragment_add_new_comment_blank" >
+
+        <argument
+            android:name="userPostObject"
+            app:argType="com.example.dependencyinjection.model.data.UserPost" />
+        <argument
+            android:name="image"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="numberOfComment"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="userDetailObject"
+            app:argType="com.example.dependencyinjection.model.data.UserDetail" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/addNewPostFragment"
+        android:name="com.example.dependencyinjection.ui.addnewpostfragment.AddNewPostFragment"
+        android:label="fragment_add_new_post"
+        tools:layout="@layout/fragment_add_new_post" >
+        <action
+            android:id="@+id/action_addNewPostFragment_to_showList"
+            app:destination="@id/showList" />
+    </fragment>
+</navigation>

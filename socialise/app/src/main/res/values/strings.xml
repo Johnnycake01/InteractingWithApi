@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Socialise</string>
+    <string name="hello_world">Hello World</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="like">Like</string>
+    <string name="comments">Comments</string>
+    <string name="share">Share</string>
+    <string name="all_comments">All Comments</string>
+</resources>

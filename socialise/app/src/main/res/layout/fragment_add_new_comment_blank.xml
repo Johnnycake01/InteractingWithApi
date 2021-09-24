@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".ui.addcommentfragment.AddNewCommentBlankFragment"
+        android:background="@color/customAsh"
+     >
+    <androidx.cardview.widget.CardView
+        android:id="@+id/postFromListFragmentCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/allCommentsFrom"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="20dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/rvUserImageCard"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="100dp"
+                app:cardPreventCornerOverlap="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                >
+
+                <ImageView
+                    android:id="@+id/rvUserImageFrom"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="centerCrop" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tvUserIdFrom"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/rvUserImageCard"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvUserTimeOfPostFrom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                app:layout_constraintStart_toEndOf="@id/rvUserImageCard"
+                app:layout_constraintTop_toBottomOf="@id/tvUserIdFrom" />
+
+            <TextView
+                android:id="@+id/tvUserPostBodyFrom"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                android:justificationMode="inter_word"
+                android:gravity="fill_horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvUserImageCard" />
+
+            <View
+                android:id="@+id/likeCountSmallImageFrom"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/thumb_up_white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvUserPostBodyFrom" />
+
+            <TextView
+                android:id="@+id/likeCountFrom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toEndOf="@id/likeCountSmallImageFrom"
+                app:layout_constraintTop_toTopOf="@id/likeCountSmallImageFrom" />
+
+            <View
+                android:id="@+id/dividerFrom"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/likeCountSmallImageFrom" />
+
+            <LinearLayout
+                android:id="@+id/containerLikeFrom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/containerCommentFrom"
+                app:layout_constraintTop_toBottomOf="@id/dividerFrom"
+                >
+                <View
+                    android:id="@+id/clickToLikeFrom"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/thumb_up_white"
+                    />
+
+                <TextView
+                    android:id="@+id/clickToLikeTextFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/like"
+                    />
+
+            </LinearLayout>
+            <View
+                android:visibility="gone"
+                android:id="@+id/customLike"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/thumb_up_coloured"
+                app:layout_constraintBottom_toBottomOf="@id/containerLikeFrom"
+                app:layout_constraintStart_toStartOf="@id/containerLikeFrom"
+                />
+
+            <LinearLayout
+                android:id="@+id/containerCommentFrom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                app:layout_constraintEnd_toStartOf="@id/containerShareFrom"
+                app:layout_constraintStart_toEndOf="@id/containerLikeFrom"
+                app:layout_constraintTop_toBottomOf="@id/dividerFrom"
+                >
+                <View
+                    android:id="@+id/clickToCommentFrom"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/chat_24"
+                    />
+                <TextView
+                    android:id="@+id/clickToCommentTextFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/comments"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/containerShareFrom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/containerCommentFrom"
+                app:layout_constraintTop_toBottomOf="@id/dividerFrom"
+                >
+                <View
+                    android:id="@+id/clickToShareFrom"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/share_24"
+                    />
+
+                <TextView
+                    android:id="@+id/clickToShareTextFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/share"
+                    />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/allCommentsFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="@string/all_comments"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/postFromListFragmentCardView"
+            />
+        <View
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toEndOf="@id/allCommentsFrom"
+            app:layout_constraintTop_toTopOf="@id/allCommentsFrom"
+            android:background="@drawable/ic_baseline_arrow_drop_down_24"
+            />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listOfCommentRecyclerViewFrom"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/allCommentsFrom"
+            app:layout_constraintBottom_toTopOf="@id/addCommentContainer"
+            tools:listitem="@layout/list_of_comment_recycler_view_layout"
+            />
+    <LinearLayout
+        android:id="@+id/addCommentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/customAsh"
+        >
+        <EditText
+            android:id="@+id/addCommentEditBox"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="70"
+
+            android:hint="add new comment"
+
+            android:background="@drawable/edit_box_2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/addCommentBT"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <View
+            android:id="@+id/addCommentBT"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/ic_baseline_send_24"
+            app:layout_constraintStart_toEndOf="@id/addCommentEditBox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+    </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
